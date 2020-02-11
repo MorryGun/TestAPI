@@ -55,10 +55,11 @@ namespace APITest.Tests
 
             var responseData = convert.ResponseConvertDictionaryToJson(response);
 
-            foreach (var employee in responseData.data)
-            {
-                employee.id.Should().Be(22);
-            }
+            //foreach (var employee in responseData.data)
+            //{
+            //    employee.id.Should().Be(7);
+            //}
+            responseData.data.Should().BeNull("Data is present in the collection");
         }
 
         [Test]
@@ -90,53 +91,23 @@ namespace APITest.Tests
         public async Task CheckThatEmployeeControlerCreateNewEmployeeFailTest()
         {
             var response = await this.CreateNewEmplpoyeeAsync();
-            //string jsonResult = JsonConvert.SerializeObject(response, Formatting.Indented);
-            //responseData = SimpleJson.DeserializeObject<ResponseModel>(jsonResult);
-
-            //Console.WriteLine(responseData.status);
-
-            ////foreach (var res in responseData.data)
-            ////{
-            ////    string jsonEmployee = JsonConvert.SerializeObject(res, Formatting.Indented);
-            //    employee = SimpleJson.DeserializeObject<EmployeeModel>(jsonResult);/*jsonEmployee*/
-
-
-            //    Console.WriteLine(employee.id);
-            //    Console.WriteLine(employee.employee_name);
-            //    Console.WriteLine(employee.employee_salary);
-            //    Console.WriteLine(employee.employee_age);
-            //    Console.WriteLine(employee.profile_image);
-            ////}
-
-
-            //responseData = convert.ResponseConvertDictionaryToJson(response);
-
-            //Console.WriteLine(responseData.status);
-
-            //foreach (var res in responseData.data)
-            //{
-            //    employee = convert.EmployeeConvertDictionaryToJson(res);
-            //}
-
-            //responseData.Should().NotBeNull("Response is null");
 
             var responseData = convert.EmployeeConvertDictionaryToJson(response);
 
-
             responseData.Should().NotBeNull("Response is null");
 
-
-            //response = await this.GetEmployeeByIdAsync(41);
-            //((System.Collections.Generic.Dictionary<string, object>)response)["data"]
-            // ((System.Collections.Generic.Dictionary<string, object>)response)["message"].Should().Be("Not found");
         }
 
         [Test]
         public async Task CheckThatEmployeeControlerDeleteEmployeeByIdFailTest()
         {
-            var response = await this.DeleteEmployeeByIdAsync(22);
+            var response = await this.DeleteEmployeeByIdAsync(7);
 
-            response.Should().BeNull("Is present in the collection");
+            var responseData = convert.ResponseConvertDictionaryToJson(response);
+
+            responseData.data.Should().BeNull("Data is present");
+
+            //response.Should().BeNull("Is present in the collection");
         }
 
         [Test]
@@ -171,24 +142,8 @@ namespace APITest.Tests
 
             var responseData = convert.ResponseConvertDictionaryToJson(response);
 
-            responseData.data.Should().NotBeNull("Data is null");
+            responseData.data.Should().BeNull("Data is not null ");
         }
-
-        //[Test]
-        //public void CheckThatEmployeeControllerReturnFivesEmployeeFailTestNotAsync()
-        //{
-        //    var response = GetById.PullDataFromListSingleId(4); // await this.GetEmployeeByIdAsync(5);
-
-        //    responseData = convert.ResponseConvertDictionaryToJson(response);
-
-        //    foreach (var res in responseData.data)
-        //    {
-        //        employee = convert.EmployeeConvertDictionaryToJson(res);
-        //    }
-
-        //    employee.id.Should().Be("22");
-
-        //}
 
     }
 }
@@ -204,6 +159,28 @@ namespace APITest.Tests
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//response = await this.GetEmployeeByIdAsync(41);
+//((System.Collections.Generic.Dictionary<string, object>)response)["data"]
+// ((System.Collections.Generic.Dictionary<string, object>)response)["message"].Should().Be("Not found");
 
 
 //[Test]
@@ -315,3 +292,24 @@ namespace APITest.Tests
 
 //string result = string.Join(",", response/*.Select(",", m => m.Key + " = " + m.Value).ToArray()*/);
 /*result*//*(System.Collections.Generic.Dictionary<string, object>)response*/
+
+
+
+
+
+
+//[Test]
+//public void CheckThatEmployeeControllerReturnFivesEmployeeFailTestNotAsync()
+//{
+//    var response = GetById.PullDataFromListSingleId(4); // await this.GetEmployeeByIdAsync(5);
+
+//    responseData = convert.ResponseConvertDictionaryToJson(response);
+
+//    foreach (var res in responseData.data)
+//    {
+//        employee = convert.EmployeeConvertDictionaryToJson(res);
+//    }
+
+//    employee.id.Should().Be("22");
+
+//}
