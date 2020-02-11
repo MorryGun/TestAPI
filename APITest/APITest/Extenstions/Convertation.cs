@@ -1,10 +1,7 @@
 ﻿using APITest.Models;
 using Newtonsoft.Json;
 using RestSharp;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace APITest.Extenstions
 {

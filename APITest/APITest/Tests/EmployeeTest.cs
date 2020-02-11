@@ -3,13 +3,8 @@ using APITest.Models;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using System.Linq;
-using System.IO;
-using RestSharp;
 using System;
-using Newtonsoft.Json;
 using APITest.Extenstions;
-using System.Net;
 using APITest.Constants;
 
 namespace APITest.Tests
