@@ -9,5 +9,7 @@ namespace APITest.Managers
         protected IConfigurationRoot Config => new ConfigurationBuilder()
                                                         .AddJsonFile(ConfigFile)
                                                         .Build();
+
+        //public 
     }
 }
