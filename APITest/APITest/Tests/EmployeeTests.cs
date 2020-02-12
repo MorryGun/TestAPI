@@ -1,5 +1,9 @@
 ﻿using APITest.Controllers;
+using APITest.Models;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace APITest.Tests
@@ -10,11 +14,11 @@ namespace APITest.Tests
         [Test]
         public async Task MyTest()
         {
-            var response = await GetAllEmployeesAsync();
-            var response2 = await GetEmployeeByIdAsync(4);
-            var response3 = await CreateEmployeeAsync("Hello", 123456, 55);
-            var response4 = await UpdateEmployeeAsync(4, "Hello", 123456, 55);
-            var response5 = await DeleteEmployeeAsync(4);
+            var response1 = await GetEmployeeByIdAsync(4);
+            var employee1 = JsonConvert.DeserializeObject<Employee>(response1.Content);
+
+            var response2 = await GetAllEmployeesAsync();
+            var employee2 = JsonConvert.DeserializeObject<Employees>(response2.Content);
         }
     }
 }

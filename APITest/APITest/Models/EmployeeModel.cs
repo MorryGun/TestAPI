@@ -1,7 +1,7 @@
 ﻿namespace APITest.Models
 {
 
-    public class Rootobject
+    public class Employee
     {
         public string status { get; set; }
         public Data data { get; set; }
