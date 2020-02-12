@@ -9,11 +9,11 @@ namespace APITest.Tests
     public class EmployeeTest : EmployeeController
     {
         [Test]
-        public async Task CheckThatEmployeeControllerReturnsResponse()
+        public async Task MyTest()
         {
-            var response = await this.GetEmployeeAsync();
-
-            response.Should().NotBeNull("Response is null");
+            //var response = await this.GetAllEmployeesAsync();
+            //var response = await this.GetEmployeeByIdAsync(4);
+            var response = await this.CreateEmployeeAsync("Hhhhhhh", 33333, 66);
         }
     }
 }
