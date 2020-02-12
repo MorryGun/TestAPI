@@ -13,5 +13,9 @@ namespace APITest.Constants
         public static string GetEmployeeURL = string.Concat(FirstPartUrl, "/employee/");
 
         public static string CreateEmployeeURL = string.Concat(FirstPartUrl, "/create");
+
+        public static string UpdateEmployeeURL = string.Concat(FirstPartUrl, "/update/");
+
+        public static string DeleteEmployeeURL = string.Concat(FirstPartUrl, "/delete/");
     }
 }
