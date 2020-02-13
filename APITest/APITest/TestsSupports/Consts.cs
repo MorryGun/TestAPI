@@ -6,13 +6,17 @@ namespace APITest.TestsSupports
 {
     public static class Consts
     {
+        public const uint HugeId = 99999;
+
         public const string CommonName = "Лштшфум";
 
         public const string CorrectRussianName = "Иван Иванович Иванов";
 
         public const string CorrectEnglishName = "John Johnson Jr.";
 
-        public const string HugeName = "AaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaa";
+        public const string OneWordHugeName = "AaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaaAaaaaaaaaa";
+
+        public const string ManyWordsHugeName = "Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa Aaaaaaaaaa ";
 
         public const uint CommonSalary = 1000;
 

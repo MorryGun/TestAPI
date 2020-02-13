@@ -1,9 +1,9 @@
 ﻿namespace APITest.Models
 {
-    public class RecordDoesNotFound
+    public class RecordDoesNotFoundModel
     {
         public string status { get; set; }
-        public string data { get; set; }
+        public object data { get; set; }
     }
 
 }
