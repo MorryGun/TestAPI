@@ -74,7 +74,8 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControlerCreateNewEmployee()
         {
-            var response = await this.CreateNewEmplpoyeeAsync();
+            EmployeeModel employee = new EmployeeModel() { name = "TestName1", salary = "123456", id = 45, age = "22" };
+            var response = await this.CreateNewEmplpoyeeAsync(employee);
 
             //EmployeeModel employee = new EmployeeModel() { name = "New user", salary = "11111", age = "33" };
             ((System.Collections.Generic.Dictionary<string, object>)response)["status"]
@@ -85,7 +86,8 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControlerCreateNewEmployeeFailTest()
         {
-            var response = await this.CreateNewEmplpoyeeAsync();
+            EmployeeModel employee = new EmployeeModel() { name = "TestName2", id = 46, age = "33", salary = "654321" };
+            var response = await this.CreateNewEmplpoyeeAsync(employee);
 
             var responseData = convert.EmployeeConvertDictionaryToJson(response);
 
@@ -123,7 +125,9 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControlerUpdateEmployeeById()
         {
-            var response = await this.UpdateEmployeeByIdAsync(7);
+            EmployeeModel employee = new EmployeeModel() { name = "ChangeName1", age = "11", salary = "500"};
+
+            var response = await this.UpdateEmployeeByIdAsync(7, employee);
 
             var responseData = convert.ResponseConvertDictionaryToJson(response);
 
@@ -133,7 +137,9 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControlerUpdateEmployeeByIdFailTest()
         {
-            var response = await this.UpdateEmployeeByIdAsync(7);
+            EmployeeModel employee = new EmployeeModel() { name = "ChangeName2", age = "20", salary = "10000" };
+
+            var response = await this.UpdateEmployeeByIdAsync(7, employee);
 
             var responseData = convert.ResponseConvertDictionaryToJson(response);
 

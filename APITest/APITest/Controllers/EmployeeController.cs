@@ -25,16 +25,16 @@ namespace APITest.Controllers
             return await this.GetAsync(resource);
         }
 
-        protected async Task<object> CreateNewEmplpoyeeAsync()
+        protected async Task<object> CreateNewEmplpoyeeAsync(EmployeeModel employee)
         {
             var resource = string.Join(this.BaseUrl, CreateNewEmployeeUrl);
-            return await this.PostAsync(resource);
+            return await this.PostAsync(resource, employee);
         }
 
-        protected async Task<object> UpdateEmployeeByIdAsync(int employeeId)
+        protected async Task<object> UpdateEmployeeByIdAsync(int employeeId, EmployeeModel employee)
         {
             var resource = string.Join(this.BaseUrl, string.Format(UpdateEmployeeByIdUrl, employeeId));
-            return await this.PutAsync(resource);
+            return await this.PutAsync(resource, employee);
         }
         protected async Task<object> DeleteEmployeeByIdAsync(int employeeId)
         {
