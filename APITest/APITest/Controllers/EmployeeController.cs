@@ -6,6 +6,13 @@ namespace APITest.Controllers
 {
     public class EmployeeController
     {
+        private async Task AddCookiesInRequest(RestRequest request)
+        {
+            var response = await GetAllEmployeesAsync();
+
+            request.AddCookie("PHPSESSID", response.Cookies[0].Value);
+        }
+
         public async Task<IRestResponse> GetAllEmployeesAsync()
         {
             var client = new RestClient(ConfigConstants.GetAllEmployeesURL);
@@ -17,26 +24,22 @@ namespace APITest.Controllers
 
         public async Task<IRestResponse> GetEmployeeByIdAsync(int employeeId)
         {
-            var response = await GetAllEmployeesAsync();
-
             var client = new RestClient(string.Concat(ConfigConstants.GetEmployeeURL, employeeId));
 
             var request = new RestRequest(string.Concat(ConfigConstants.GetEmployeeURL, employeeId), Method.GET);
 
-            request.AddCookie("PHPSESSID", response.Cookies[0].Value);
-            
+            await AddCookiesInRequest(request);
+
             return await Task.Run(() => client.Get<RestResponse>(request));
         }
 
         public async Task<IRestResponse> CreateEmployeeAsync(string employeeName, int employeeSalary, int employeeAge)
         {
-            var response = await GetAllEmployeesAsync();
-
             var client = new RestClient(ConfigConstants.CreateEmployeeURL);
 
             var request = new RestRequest(ConfigConstants.CreateEmployeeURL, Method.POST);
 
-            request.AddCookie("PHPSESSID", response.Cookies[0].Value);
+            await AddCookiesInRequest(request);
 
             var body = string.Format("{{\"name\":\"{0}\",\"salary\":\"{1}\",\"age\":\"{2}\"}}", employeeName, employeeSalary, employeeAge);
 
@@ -47,13 +50,11 @@ namespace APITest.Controllers
 
         public async Task<IRestResponse> UpdateEmployeeAsync(int employeeId, string employeeName, int employeeSalary, int employeeAge)
         {
-            var response = await GetAllEmployeesAsync();
-
             var client = new RestClient(string.Concat(ConfigConstants.UpdateEmployeeURL, employeeId));
 
             var request = new RestRequest(string.Concat(ConfigConstants.UpdateEmployeeURL, employeeId), Method.PUT);
 
-            request.AddCookie("PHPSESSID", response.Cookies[0].Value);
+            await AddCookiesInRequest(request);
 
             var body = string.Format("{{\"name\":\"{0}\",\"salary\":\"{1}\",\"age\":\"{2}\"}}", employeeName, employeeSalary, employeeAge);
 
@@ -64,13 +65,11 @@ namespace APITest.Controllers
 
         public async Task<IRestResponse> DeleteEmployeeAsync(int employeeId)
         {
-            var response = await GetAllEmployeesAsync();
-
             var client = new RestClient(string.Concat(ConfigConstants.DeleteEmployeeURL, employeeId));
 
             var request = new RestRequest(string.Concat(ConfigConstants.DeleteEmployeeURL, employeeId), Method.DELETE);
 
-            request.AddCookie("PHPSESSID", response.Cookies[0].Value);
+            await AddCookiesInRequest(request);
 
             return await Task.Run(() => client.Delete<RestResponse>(request));
         }
