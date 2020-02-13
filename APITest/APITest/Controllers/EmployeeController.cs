@@ -22,7 +22,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Get(request));
         }
 
-        public async Task<IRestResponse> GetEmployeeByIdAsync(int employeeId)
+        public async Task<IRestResponse> GetEmployeeByIdAsync(uint employeeId)
         {
             var client = new RestClient(string.Concat(ConfigConstants.GetEmployeeURL, employeeId));
 
@@ -33,7 +33,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Get<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> CreateEmployeeAsync(string employeeName, int employeeSalary, int employeeAge)
+        public async Task<IRestResponse> CreateEmployeeAsync(string employeeName, uint employeeSalary, byte employeeAge)
         {
             var client = new RestClient(ConfigConstants.CreateEmployeeURL);
 
@@ -48,7 +48,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Post<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> UpdateEmployeeAsync(int employeeId, string employeeName, int employeeSalary, int employeeAge)
+        public async Task<IRestResponse> UpdateEmployeeAsync(uint employeeId, string employeeName, uint employeeSalary, byte employeeAge)
         {
             var client = new RestClient(string.Concat(ConfigConstants.UpdateEmployeeURL, employeeId));
 
@@ -63,7 +63,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Put<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> DeleteEmployeeAsync(int employeeId)
+        public async Task<IRestResponse> DeleteEmployeeAsync(uint employeeId)
         {
             var client = new RestClient(string.Concat(ConfigConstants.DeleteEmployeeURL, employeeId));
 

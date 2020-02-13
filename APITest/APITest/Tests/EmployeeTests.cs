@@ -18,7 +18,7 @@ namespace APITest.Tests
 
             var status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
+            Assert.That(status == "success", TestsSupport.StatusException(status));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
+            Assert.That(status == "success", TestsSupport.StatusException(status));
         }
 
         [Test]
@@ -50,28 +50,97 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "failed", TestsSupport.StatusIsSuccessException(status));
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
         }
-
-        [Test]
-        public async Task GetEmployeeByIdAsync_NegativeIdValueTest()
-        {
-            var response = await GetEmployeeByIdAsync(-1);
-
-            string status = TestsSupport.StatusValidation(response);
-
-            Assert.That(status == "failed", TestsSupport.StatusIsSuccessException(status));
-        }
-
 
         [Test]
         public async Task CreateEmployeeAsync_StatusIsSuccessTest()
         {
-            var response = await CreateEmployeeAsync("Test employee name", 1000, 99);
+            var response = await CreateEmployeeAsync(Consts.CommonName, Consts.CommonSalary, Consts.CommonAge);
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
+            Assert.That(status == "success", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_EmptyNameTest()
+        {
+            var response = await CreateEmployeeAsync("", Consts.CommonSalary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_OnlySpacesInNameTest()
+        {
+            var response = await CreateEmployeeAsync(" ", Consts.CommonSalary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_CorrectRussianNameTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.CorrectRussianName, Consts.CommonSalary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "success", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_CorrectEnglishNameTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.CorrectEnglishName, Consts.CommonSalary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "success", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_HugeNameTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.HugeName, Consts.CommonSalary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_HugeSalaryTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.CommonName, Consts.HugeSallary, Consts.CommonAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_VerySmallAgeTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.CommonName, Consts.CommonSalary, Consts.VerySmallAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
+        }
+
+        [Test]
+        public async Task CreateEmployeeAsync_NotBornYetAgeTest()
+        {
+            var response = await CreateEmployeeAsync(Consts.CommonName, Consts.CommonSalary, Consts.NotBornYetAge);
+
+            string status = TestsSupport.StatusValidation(response);
+
+            Assert.That(status == "failed", TestsSupport.StatusException(status));
         }
     }
 }
