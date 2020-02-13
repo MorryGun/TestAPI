@@ -18,7 +18,7 @@ namespace APITest.Tests
 
             var status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", "GetAllEmployeesAsync request is not success");
+            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", string.Format("Status of request is {0}", status));
+            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "failed", string.Format("Status of request is {0}, but expected failed", status));
+            Assert.That(status == "failed", TestsSupport.StatusIsSuccessException(status));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "failed", string.Format("Status of request is {0}, but expected failed", status));
+            Assert.That(status == "failed", TestsSupport.StatusIsSuccessException(status));
         }
 
 
@@ -71,7 +71,7 @@ namespace APITest.Tests
 
             string status = TestsSupport.StatusValidation(response);
 
-            Assert.That(status == "success", string.Format("Status of request is {0}", status));
+            Assert.That(status == "success", TestsSupport.StatusIsNotSuccessException(status));
         }
     }
 }

@@ -28,5 +28,15 @@ namespace APITest.TestsSupports
 
             return status;
         }
+
+        public static string StatusIsNotSuccessException(string status)
+        {
+            return string.Format("Status of request is {0}", status);
+        }
+
+        public static string StatusIsSuccessException(string status)
+        {
+            return string.Format("Status of request is {0}, but expected failed", status);
+        }
     }
 }
