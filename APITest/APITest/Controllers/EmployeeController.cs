@@ -39,7 +39,7 @@ namespace APITest.Controllers
         protected async Task<object> DeleteEmployeeByIdAsync(int employeeId)
         {
             var resource = string.Join(this.BaseUrl, string.Format(DeleteEmployeeByIdUrl, employeeId));
-            return await this.GetAsync(resource);
+            return await this.DeleteAsync(resource);
         }
 
        

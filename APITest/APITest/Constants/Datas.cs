@@ -7,7 +7,7 @@ namespace APITest.Constants
     public class Datas
     {
         public const string fail = "Not found";
-        public const string delete = "Method not allowed. Must be one of: DELETE";
+        public const string delete = "Error! Not able to delete record";
         public const string success = "success";
 
     }

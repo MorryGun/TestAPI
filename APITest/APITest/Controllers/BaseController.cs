@@ -36,5 +36,11 @@ namespace APITest.Controllers
             request.AddJsonBody(entity);
             return await this.RestClient.PutAsync<object>(request);
         }
+
+        protected async Task<object> DeleteAsync(string resorce)
+        {
+            var request = new RestRequest(resorce, Method.DELETE);
+            return await this.RestClient.DeleteAsync<object>(request);
+        }
     }
 }
