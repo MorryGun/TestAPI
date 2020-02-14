@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using RestSharp;
 using APITest.Constants;
+using APITest.Models;
+using Newtonsoft.Json;
 
 namespace APITest.Controllers
 {
@@ -13,7 +15,7 @@ namespace APITest.Controllers
             request.AddCookie("PHPSESSID", response.Cookies[0].Value);
         }
 
-        public async Task<IRestResponse> GetAllEmployeesAsync()
+        protected async Task<IRestResponse> GetAllEmployeesAsync()
         {
             var client = new RestClient(ConfigConstants.GetAllEmployeesURL);
 
@@ -22,7 +24,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Get(request));
         }
 
-        public async Task<IRestResponse> GetEmployeeByIdAsync(uint employeeId)
+        protected async Task<IRestResponse> GetEmployeeByIdAsync(uint employeeId)
         {
             var client = new RestClient(string.Concat(ConfigConstants.GetEmployeeURL, employeeId));
 
@@ -33,7 +35,7 @@ namespace APITest.Controllers
             return await Task.Run(() => client.Get<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> CreateEmployeeAsync(string employeeName, uint employeeSalary, byte employeeAge)
+        protected async Task<IRestResponse> CreateEmployeeAsync(string employeeName, uint employeeSalary, byte employeeAge)
         {
             var client = new RestClient(ConfigConstants.CreateEmployeeURL);
 
@@ -41,14 +43,20 @@ namespace APITest.Controllers
 
             await AddCookiesInRequest(request);
 
-            var body = string.Format("{{\"name\":\"{0}\",\"salary\":\"{1}\",\"age\":\"{2}\"}}", employeeName, employeeSalary, employeeAge);
+            RequestBodyModel body = new RequestBodyModel();
 
-            request.AddJsonBody(body);
+            body.name = employeeName;
+
+            body.salary = employeeSalary;
+
+            body.age = employeeAge;
+
+            request.AddJsonBody(JsonConvert.SerializeObject(body));
 
             return await Task.Run(() => client.Post<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> UpdateEmployeeAsync(uint employeeId, string employeeName, uint employeeSalary, byte employeeAge)
+        protected async Task<IRestResponse> UpdateEmployeeAsync(uint employeeId, string employeeName, uint employeeSalary, byte employeeAge)
         {
             var client = new RestClient(string.Concat(ConfigConstants.UpdateEmployeeURL, employeeId));
 
@@ -56,14 +64,20 @@ namespace APITest.Controllers
 
             await AddCookiesInRequest(request);
 
-            var body = string.Format("{{\"name\":\"{0}\",\"salary\":\"{1}\",\"age\":\"{2}\"}}", employeeName, employeeSalary, employeeAge);
+            RequestBodyModel body = new RequestBodyModel();
 
-            request.AddJsonBody(body);
+            body.name = employeeName;
+
+            body.salary = employeeSalary;
+
+            body.age = employeeAge;
+
+            request.AddJsonBody(JsonConvert.SerializeObject(body));
 
             return await Task.Run(() => client.Put<RestResponse>(request));
         }
 
-        public async Task<IRestResponse> DeleteEmployeeAsync(uint employeeId)
+        protected async Task<IRestResponse> DeleteEmployeeAsync(uint employeeId)
         {
             var client = new RestClient(string.Concat(ConfigConstants.DeleteEmployeeURL, employeeId));
 
