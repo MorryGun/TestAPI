@@ -15,13 +15,20 @@ namespace APITest.Controllers
         private const string UpdateEmployeeByIdUrl = "/update/{0}";
         private const string DeleteEmployeeByIdUrl = "/delete/{0}";
 
-        protected async Task<List<EmployeeModel>> GetEmployeeAsync()
+        protected async Task<List<EmployeeModelResponse>> GetEmployeeAsync()
         {
             var resource = string.Join(this.BaseUrl, GetEmployeeUrl);
             var response = await this.GetAsync(resource);
-            string jsonRespose = string.Join("", JsonConvert.SerializeObject(response).Split("employee_").Distinct());
-            jsonRespose  = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonRespose).Values.ToList()[1].ToString();
-            return JsonConvert.DeserializeObject<List<EmployeeModel>>(jsonRespose);
+            string jsonRespose = JsonConvert.SerializeObject(GetValueFromResponsByKey(response, "data"));
+            return JsonConvert.DeserializeObject<List<EmployeeModelResponse>>(jsonRespose);
+        }
+
+        protected async Task<EmployeeModelRequest> PostAsync(EmployeeModelRequest employee)
+        {
+            var resource = string.Join(this.BaseUrl, string.Format(CreateEmployeeByIdUrl));
+            object response = await this.PostAsync(resource, JsonConvert.SerializeObject(employee));
+            string jsonRespose = JsonConvert.SerializeObject(GetValueFromResponsByKey(response, "data"));
+            return JsonConvert.DeserializeObject<EmployeeModelRequest>(jsonRespose);
         }
 
         protected async Task<IRestResponse> GetEmployeeByIdAsync(int employeeId)
@@ -30,26 +37,29 @@ namespace APITest.Controllers
             return (IRestResponse)await this.ExecuteAsync(resource, Method.GET);            
         }
 
-        protected async Task<EmployeeModel> PostAsync(EmployeeModel employee)
-        {
-            var resource = string.Join(this.BaseUrl, string.Format(CreateEmployeeByIdUrl));
-            string jsonEmployee = JsonConvert.SerializeObject(employee);
-            Dictionary<string, object> response = (Dictionary<string, object>)((Dictionary<string, object>)await this.PostAsync(resource, jsonEmployee))["data"];
-            string responseJson = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
-            return JsonConvert.DeserializeObject<EmployeeModel>(responseJson);
-        }
-
         protected async Task<string> DeleteAsync(int employeeId)
         {
             var resource = string.Join(this.BaseUrl, string.Format(DeleteEmployeeByIdUrl, employeeId));
-            return ((Dictionary<string, object>)await this.DeleteAsync(resource))["status"].ToString();
+            object response = await this.DeleteAsync(resource);
+            return GetValueFromResponsByKey(response, "status").ToString();
         }
 
-        protected async Task<string> PutAsync(int employeeId, EmployeeModel employee)
+        protected async Task<string> PutAsync(int employeeId, EmployeeModelRequest employee)
         {
             var resource = string.Join(this.BaseUrl, string.Format(UpdateEmployeeByIdUrl, employeeId));
-            string jsonEmployee = JsonConvert.SerializeObject(employee);
-            return ((Dictionary<string, object>)await this.PutAsync(resource, jsonEmployee))["status"].ToString();
+            object response = await this.PutAsync(resource, JsonConvert.SerializeObject(employee));
+            return GetValueFromResponsByKey(response, "status").ToString();
+        }
+
+        protected object GetValueFromResponsByKey(object response, string key)
+        {
+            Dictionary<string, object> values = (Dictionary<string, object>)response;
+            if (values.TryGetValue(key, out object value))
+            {
+                return value;
+            }
+
+            return default(object);
         }
     }
 }

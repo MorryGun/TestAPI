@@ -15,7 +15,7 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControllerReturnsResponse()
         {
-            List<EmployeeModel> response = await this.GetEmployeeAsync();
+            List<EmployeeModelResponse> response = await this.GetEmployeeAsync();
             response.Should().HaveCount(24);
         }
 
@@ -29,7 +29,7 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatPutEmployeeControllerReturnsResponse()
         {
-            EmployeeModel employee = new EmployeeModel { Name = "foo", Salary = 30000, Age = 30, Id = 18, Image = "" };
+            EmployeeModelRequest employee = new EmployeeModelRequest { Name = "foo", Salary = 30000, Age = 30, Id = 18, Image = "" };
             string response = await this.PutAsync(18, employee);
             response.Should().BeEquivalentTo("success");
         }
@@ -37,8 +37,8 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatPostEmployeeControllerReturnsResponse()
         {
-            EmployeeModel employee = new EmployeeModel { Name = "foo", Salary = 30000, Age = 30, Image = "" };
-            EmployeeModel employeeResponse = await this.PostAsync(employee);
+            EmployeeModelRequest employee = new EmployeeModelRequest { Name = "foo", Salary = 30000, Age = 30, Image = "" };
+            EmployeeModelRequest employeeResponse = await this.PostAsync(employee);
             employeeResponse.Id.Should().NotBe(null);
             employeeResponse.Name.Should().BeEquivalentTo(employee.Name);
             employeeResponse.Salary.Should().Equals(employee.Salary);
