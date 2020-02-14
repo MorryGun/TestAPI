@@ -51,7 +51,9 @@ namespace APITest.TestsSupports
         public static string GetRandomNewName()
         {
             string result = "";
+
             var rand = new Random();
+
             for (int i = 0; i < 10; i++)
             {
                 result += (char)(rand.Next(1040, 1104));

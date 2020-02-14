@@ -15,6 +15,7 @@ namespace APITest.Tests
         public async Task OneTimeTearDownMethod()
         {
             await CreateEmployeeAsync(TestsSupport.GetRandomNewName(), TestsSupport.GetRandomNewSalary(), TestsSupport.GetRandomNewAge());
+
             await CreateEmployeeAsync(TestsSupport.GetRandomNewName(), TestsSupport.GetRandomNewSalary(), TestsSupport.GetRandomNewAge());
         }
 
