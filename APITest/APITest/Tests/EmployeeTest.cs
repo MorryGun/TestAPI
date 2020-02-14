@@ -1,11 +1,9 @@
 ﻿using APITest.Controllers;
 using APITest.Models;
 using FluentAssertions;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using RestSharp;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -17,38 +15,42 @@ namespace APITest.Tests
         [Test]
         public async Task CheckThatEmployeeControllerReturnsResponse()
         {
-            object response = await this.GetEmployeeAsync();
-            List<EmployeeModel> employees = JsonConvert.DeserializeObject<List<EmployeeModel>>(string.Join("", JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(response)).Values.ToList()[1].ToString().Split("employee_").Distinct()));
-            employees.Should().HaveCount(24);
+            List<EmployeeModel> response = await this.GetEmployeeAsync();
+            response.Should().HaveCount(24);
         }
 
         [Test]
         public async Task CheckThatEmployeeByIdControllerReturnsResponse()
         {
-            IRestResponse response = (IRestResponse)await this.GetEmployeeByIdAsync(2);
+            IRestResponse response = await this.GetEmployeeByIdAsync(5);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Test]
         public async Task CheckThatPutEmployeeControllerReturnsResponse()
         {
-            EmployeeModel employee = new EmployeeModel { name = "foo", salary = 30000, age = 30, id = 18, image = "" };
-            string success = ((Dictionary<string, object>)await this.PutAsync(18, employee))["status"].ToString();
-            success.Should().BeEquivalentTo("success");
+            EmployeeModel employee = new EmployeeModel { Name = "foo", Salary = 30000, Age = 30, Id = 18, Image = "" };
+            string response = await this.PutAsync(18, employee);
+            response.Should().BeEquivalentTo("success");
         }
 
         [Test]
         public async Task CheckThatPostEmployeeControllerReturnsResponse()
         {
-            EmployeeModel employee = new EmployeeModel { name = "foo", salary = 30000, age = 30, image = "" };
-            Dictionary<string, object> response = (Dictionary<string, object>)((Dictionary<string, object>)await this.PostAsync(employee))["data"];
-            string responseJson = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
-            EmployeeModel employeeResponse = JsonConvert.DeserializeObject<EmployeeModel>(responseJson);
-            employeeResponse.id.Should().NotBe(null);
-            employeeResponse.name.Should().BeEquivalentTo(employee.name);
-            employeeResponse.salary.Should().Equals(employee.salary);
-            employeeResponse.age.Should().Equals(employee.age);
-            employeeResponse.name.Should().BeEquivalentTo(employee.name);
+            EmployeeModel employee = new EmployeeModel { Name = "foo", Salary = 30000, Age = 30, Image = "" };
+            EmployeeModel employeeResponse = await this.PostAsync(employee);
+            employeeResponse.Id.Should().NotBe(null);
+            employeeResponse.Name.Should().BeEquivalentTo(employee.Name);
+            employeeResponse.Salary.Should().Equals(employee.Salary);
+            employeeResponse.Age.Should().Equals(employee.Age);
+            employeeResponse.Name.Should().BeEquivalentTo(employee.Name);
+        }
+
+        [Test]
+        public async Task CheckThatDeleteEmployeeControllerReturnsResponse()
+        {
+            string response = await this.DeleteAsync(5);
+            response.Should().BeEquivalentTo("failed");
         }
     }
 }

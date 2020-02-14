@@ -4,19 +4,19 @@ namespace APITest.Models
 {
     public class EmployeeModel
     {
-       // [JsonProperty("id")]
-        public int? id { get; set; }
+       [JsonProperty(PropertyName = "id")]
+       public int? Id { get; set; }
 
-        // [JsonProperty("name")]
-        public string? name { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string? Name { get; set; }
 
-       // [JsonProperty("salary")]
-        public int? salary { get; set; }
+        [JsonProperty(PropertyName = "salary")]
+        public int? Salary { get; set; }
 
-        // [JsonProperty("age")]
-        public int? age { get; set; }
+        [JsonProperty(PropertyName = "age")]
+        public int? Age { get; set; }
 
-        // [JsonProperty("image")]
-        public string? image { get; set; }
+        [JsonProperty(PropertyName = "image")]
+        public string? Image { get; set; }
     }
 }

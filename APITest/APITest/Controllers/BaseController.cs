@@ -1,10 +1,6 @@
 ﻿using APITest.Constants;
 using APITest.Managers;
-using APITest.Models;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Net.Cache;
 using System.Threading.Tasks;
 
 namespace APITest.Controllers
@@ -20,25 +16,31 @@ namespace APITest.Controllers
             return await this.RestClient.GetAsync<object>(request);
         }
 
+        protected async Task<object> ExecuteAsync(string resource, Method method)
+        {
+            var request = new RestRequest(resource, method);
+            return await this.RestClient.ExecuteAsync<object>(request);
+        }
+
         protected async Task<object> DeleteAsync(string resource)
         {
             var request = new RestRequest(resource, Method.DELETE);
             return await this.RestClient.DeleteAsync<object>(request);
         }
 
-        protected async Task<object> PutAsync<T>(string resource, T entity)
+        protected async Task<object> PutAsync(string resource, string jsonEntity)
         {
             var request = new RestRequest(resource, Method.PUT);
             request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(entity);
+            request.AddJsonBody(jsonEntity);
             return await this.RestClient.PutAsync<object>(request);
         }
 
-        protected async Task<object> PostAsync<T>(string resource, T entity)
+        protected async Task<object> PostAsync(string resource, string jsonEntity)
         {
             IRestRequest request = new RestRequest(resource, Method.POST);
             request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(entity);
+            request.AddJsonBody(jsonEntity);
             return await this.RestClient.PostAsync<object>(request);
         }
     }
